@@ -4,7 +4,7 @@
    <mirror>
       <id>public</id>
       <mirrorOf>external:*</mirrorOf>
-      <url>http://nexus-repository.cz-dev.container.kt.co.kr/nexus3/repository/public</url>
+      <url>https://mvnrepository.com/</url>
     </mirror>
   </mirrors>
   <localRepository>/home/jenkins/.m2/repository</localRepository>
