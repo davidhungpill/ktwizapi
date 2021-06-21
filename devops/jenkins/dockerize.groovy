@@ -1,4 +1,3 @@
-def label = "ktwiz-${UUID.randomUUID().toString()}"
 
 String getBranchName(branch) {
     branchTemp=sh returnStdout:true ,script:"""echo "$branch" |sed -E "s#origin/##g" """
@@ -9,7 +8,7 @@ String getBranchName(branch) {
 }
 
 
-    node(label) {
+    node('master') {
         library 'pipeline-lib'
         
         try {
