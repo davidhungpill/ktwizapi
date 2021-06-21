@@ -23,11 +23,11 @@ podTemplate(label: label, serviceAccount: 'tiller', namespace: 'ktwiz',
             // freshStart 
             def freshStart = params.freshStart
 
-            #if ( freshStart ) {                
-            #    // remove previous working dir
-            #    print "freshStart... clean working directory ${env.JOB_NAME}"
-            #    sh 'ls -A1|xargs rm -rf' /* clean up our workspace */
-            #}
+            if ( freshStart ) {                
+                // remove previous working dir
+                print "freshStart... clean working directory ${env.JOB_NAME}"
+                sh 'ls -A1|xargs rm -rf' /* clean up our workspace */
+            }
             
             def commitId
 
@@ -68,17 +68,7 @@ podTemplate(label: label, serviceAccount: 'tiller', namespace: 'ktwiz',
                 }
             }
 
-            #stage( 'Helm lint' ) {
-            #    dir('devops/helm/ktwizapi'){
-            #        sh """
-            #        # initial helm
-            #        # central helm repo can't connect
-            #        # setting stable repo by local repo
-            #        helm init --client-only --stable-repo-url "http://127.0.0.1:8879/charts" --skip-refresh
-            #        helm lint --namespace oss --tiller-namespace oss .
-            #        """                    
-            #    }
-            #}
+
 
 
 
