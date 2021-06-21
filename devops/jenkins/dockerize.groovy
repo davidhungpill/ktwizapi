@@ -8,9 +8,6 @@ String getBranchName(branch) {
     return branchTemp
 }
 
-
-        library 'pipeline-lib'
-        
         try {
             // freshStart 
             def freshStart = params.freshStart
