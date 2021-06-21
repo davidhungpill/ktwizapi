@@ -11,11 +11,6 @@ String getBranchName(branch) {
 
 podTemplate(label: label, serviceAccount: 'tiller', namespace: 'ktwiz',
 
-    volumes: [
-        hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
-        nfsVolume(mountPath: '/home/jenkins', serverAddress: '3.36.248.102', serverPath: '/data/nfs/devops/jenkins-slave-pv', readOnly: false)
-        ]
-    ) {
     node(label) {
         library 'pipeline-lib'
         
