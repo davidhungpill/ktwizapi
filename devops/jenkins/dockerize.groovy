@@ -33,15 +33,8 @@ String getBranchName(branch) {
                     branch: "${branch}"
                     commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
             }
-            def props = readProperties  file:'devops/jenkins/dockerize.properties'
-            def tag = commitId
-            def dockerRegistry = props['dockerRegistry']
-            def image = props['image']
-            def selector = props['selector']
-            def namespace = props['namespace']
-            def appname = props['appname']
-            def apiKey = props['apiKey']
-            def projectId = props['projectId']
+            def dockerRegistry = 'https://hub.docker.com/'
+            def image = 'davidhungpill/ktwizapi'
             
             def mvnSettings = "${env.WORKSPACE}/devops/jenkins/settings.xml"
           
