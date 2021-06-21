@@ -9,7 +9,6 @@ String getBranchName(branch) {
 
 
     node('master') {
-        library 'pipeline-lib'
         
         try {
             // freshStart 
