@@ -7,9 +7,6 @@ String getBranchName(branch) {
     return branchTemp
 }
 
-   tools {
-        maven 'Maven 3.8.1'
-    }
 
     node('master') {
         
