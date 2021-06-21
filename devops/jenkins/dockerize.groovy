@@ -7,6 +7,9 @@ String getBranchName(branch) {
     return branchTemp
 }
 
+   tools {
+        maven 'Maven 3.8.1'
+    }
 
     node('master') {
         
@@ -35,7 +38,8 @@ String getBranchName(branch) {
             }
             def dockerRegistry = 'https://hub.docker.com/'
             def image = 'davidhungpill/ktwizapi'
-            
+			def tag = 'latest'
+			
             def mvnSettings = "${env.WORKSPACE}/devops/jenkins/settings.xml"
           
                      
@@ -44,7 +48,7 @@ String getBranchName(branch) {
             }
 
             stage('Build Docker image') {
-                docker.withRegistry("${dockerRegistry}", 'cluster-registry-credentials') {
+                docker.withRegistry("${dockerRegistry}", 'dockerhub-credential') {
                     sh "docker build -t ${image}:${tag} --build-arg sourceFile=`find target -name '*.jar' | head -n 1` -f devops/jenkins/Dockerfile ."
                     sh "docker push ${image}:${tag}"
                     sh "docker tag ${image}:${tag} ${image}:latest"
