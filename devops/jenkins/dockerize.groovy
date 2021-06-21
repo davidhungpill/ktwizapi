@@ -9,9 +9,6 @@ String getBranchName(branch) {
 }
 
 
-podTemplate(label: label, serviceAccount: 'tiller', namespace: 'ktwiz',
-
-    node(label) {
         library 'pipeline-lib'
         
         try {
@@ -75,5 +72,4 @@ podTemplate(label: label, serviceAccount: 'tiller', namespace: 'ktwiz',
             print " **Error :: " + e.toString()+"**"
             
         }
-    }
-}
+
