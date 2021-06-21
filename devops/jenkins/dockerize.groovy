@@ -8,6 +8,10 @@ String getBranchName(branch) {
     return branchTemp
 }
 
+
+    node(label) {
+        library 'pipeline-lib'
+        
         try {
             // freshStart 
             def freshStart = params.freshStart
@@ -69,4 +73,5 @@ String getBranchName(branch) {
             print " **Error :: " + e.toString()+"**"
             
         }
+    }
 
