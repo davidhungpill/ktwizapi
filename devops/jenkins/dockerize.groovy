@@ -28,12 +28,12 @@ String getBranchName(branch) {
             branch=getBranchName(branchTemp)
 
             stage('Get Source') {
-				print "### getting source started ###")
+				print "### getting source started ###"
                 git url: "https://github.com/davidhungpill/ktwizapi",
                     credentialsId: 'Git-Credential',
                     branch: "${branch}"
                     commitId = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-				print "### getting source completed ###")
+				print "### getting source completed ###"
             }
             def dockerRegistry = 'https://hub.docker.com/'
             def image = 'davidhungpill/ktwizapi'
@@ -43,20 +43,20 @@ String getBranchName(branch) {
           
                      
             stage('Maven build') {
-				print "### maven build start ###")
+				print "### maven build start ###"
                 sh "mvn clean package -DskipTests --settings ${mvnSettings}"               
-				print "### maven build completed ###")
+				print "### maven build completed ###"
             }
 
             stage('Build Docker image') {
-				print "### dockerfile build start ###")
+				print "### dockerfile build start ###"
                 docker.withRegistry("${dockerRegistry}", 'dockerhub-credential') {
                     sh "docker build -t ${image}:${tag} --build-arg sourceFile=`find target -name '*.jar' | head -n 1` -f devops/jenkins/Dockerfile ."
                     sh "docker push ${image}:${tag}"
                     sh "docker tag ${image}:${tag} ${image}:latest"
                     sh "docker push ${image}:latest"
                 }
-				print "### dockerfile build completed ###")
+				print "### dockerfile build completed ###"
             }
 
 
