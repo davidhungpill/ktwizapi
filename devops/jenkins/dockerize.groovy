@@ -40,7 +40,7 @@ String getBranchName(branch) {
           
                      
             stage('Maven build') {
-                sh "bin/mvn clean package -DskipTests --settings ${mvnSettings}"               
+                sh "mvn clean package -DskipTests --settings ${mvnSettings}"               
             }
 
             stage('Build Docker image') {
