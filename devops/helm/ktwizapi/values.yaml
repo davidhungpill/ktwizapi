@@ -22,7 +22,7 @@
 global:
   istio:
     enabled: false
-  namespace: oss
+  namespace: ktwiz
 
 ##=(Application 기본 작성 영역)============================================================###
 ## Application 기본 정보 작성 영역 
@@ -33,7 +33,7 @@ global:
 ##
 ##=========================================================================================###
 version: latest
-app: os-process
+app: ktwizapi
 ##=========================================================================================###
 
 
@@ -70,16 +70,16 @@ replicas: 1
 deployments:
   - spec:
       containers:
-      - image: docker-registry.default.svc:5000/oss/os-process:${version}
+      - image: davidhungpill/ktwizapi:latest
         imagePullPolicy: Always
-        name: os-process
+        name: ktwizapi
         ports:
         - containerPort: 8080
           name: http
 
         envFrom:
         - configMapRef:
-            name: os-process-env-configmap
+            name: ktwizapi-env-configmap
         
         env:
         - name: NODE_IP
@@ -100,7 +100,7 @@ deployments:
         resources: 
           requests:
             cpu: 300m
-            memory: 512Mi
+            memory: 256Mi
           limits:
             cpu: 300m
             memory: 512Mi
@@ -180,14 +180,15 @@ configMap:
 ## ----------                 -----------------------------------                ---------- ##
 ## ----------                 -----------------------------------                ---------- ##
 ingress:
-  enabled: false
-  routerEnabled: true
+  enabled: true
+  routerEnabled: false
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  serviceName: os-process
+  serviceName: ktwizapi
+  port: 80
   hosts:
-    - host: os-process.cz-okd-dev.arsenal.kt.co.kr
+    - host: ktwiz.api.ktds.amazonaws.com
       paths: 
         - /
   tls: []
@@ -216,7 +217,7 @@ ingress:
 istio:
   enabled: false
   destination:
-    host: os-process
+    host: ktwizapi
     legacy:
     
     

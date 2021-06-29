@@ -35,7 +35,7 @@ spec:
               servicePort: http2
             {{- else }}
               serviceName: {{ $.Values.ingress.serviceName }}
-              servicePort: http
+              servicePort: {{ $.Values.ingress.port }}
             {{- end }}
         {{- end }}
   {{- end }}
