@@ -1,7 +1,7 @@
 {{- $releaseName := .Release.Name -}}
 {{- $istioEnabled := and (eq .Values.global.istio.enabled true) (eq .Values.istio.enabled true) -}}
 {{- range .Values.deployments }}
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ $.Values.app }}
@@ -39,7 +39,7 @@ spec:
 {{- end }}
 ---
 {{if $.Values.canary.enabled}}
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ $.Values.app }}-canary
