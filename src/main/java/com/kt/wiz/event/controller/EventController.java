@@ -38,9 +38,6 @@ public class EventController {
 	@Autowired
 	EventService eventService;
 	
-	@Value("${target.cache.service.name}")
-    private String targetCacheServiceName;
-
 	@ApiOperation(value="Event ID로 Event 조회하는 기능", notes="event ID 필요")
 	@GetMapping("/id/{id}")
 	public @Valid ResponseEntity<Event> getEventAvailable(@Valid @PathVariable("id") long id) {
