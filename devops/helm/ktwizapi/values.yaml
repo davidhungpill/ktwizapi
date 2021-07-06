@@ -82,6 +82,12 @@ deployments:
             name: ktwizapi-env-configmap
         
         env:
+        - name: POSTGRES_ENV_IP
+          value: "ktds-db2.cznz2ugarinh.ap-northeast-2.rds.amazonaws.com"
+        - name: POSTGRES_ENV_PORT
+          value: "5432"
+        - name: POSTGRES_ENV_DB
+          value: "postgres"          
         - name: NODE_IP
           valueFrom:
             fieldRef:

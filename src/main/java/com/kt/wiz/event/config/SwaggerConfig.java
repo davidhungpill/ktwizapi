@@ -24,7 +24,7 @@ public class SwaggerConfig {
 				.apiInfo(this.apiInfo())
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.kt.wiz.event"))
-				.paths(PathSelectors.ant("/api/**"))
+				.paths(PathSelectors.ant("/**"))
 				.build();
 				//.apiInfo(getApiInfo());
 	}

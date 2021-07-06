@@ -1,0 +1,48 @@
+# profile - default
+
+#jasypt encryptor
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
+# spring boot - actuator expose
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+        
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: ENC(0HBCDy2lbWkgTSmuzFaL8vKR/wKgaSPG6Nh9SYRBk3pOhV8j6KewlQ==)
+    password: ENC(qfz0YyXIxkmieUl2Ag7LP4jQ3WNeRZXUKaAc7SYDEpaEcBRaw023rg==)
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      
+
+logging:
+  file: spring
+  file.path: /app/ktwiz/  
+  level:
+    root: INFO
+    com.kt: INFO
+    org.springframework: INFO
+    org.springframework.jdbc.core.jdbcTemplate: DEBUG
+    com.zaxxer.hikari.pool: DEBUG
+    com.zaxxer.hikari: TRACE
+
+    
+  

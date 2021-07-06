@@ -7,4 +7,4 @@ ARG sourceFile
 ENV targetFile app.jar
 
 ADD $sourceFile $targetFile
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar $targetFile"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=dev -jar $targetFile"]
