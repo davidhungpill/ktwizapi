@@ -41,9 +41,6 @@ logging:
     root: INFO
     com.kt: INFO
     org.springframework: INFO
-    org.springframework.jdbc.core.jdbcTemplate: DEBUG
-    com.zaxxer.hikari.pool: DEBUG
-    com.zaxxer.hikari: TRACE
-
+    
     
   
