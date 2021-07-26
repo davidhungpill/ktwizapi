@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		String webUrl = "http://ec2-3-36-248-102.ap-northeast-2.compute.amazonaws.com";
 		String webDomain = "http://xservice.co.kr";
-		String localUrl1 = " http://localhost:8080";
+		String localUrl1 = "http://localhost:8080";
 		
 		log.info("### cors config : {}, {}, {}, {}, {}", webUrl, webDomain, localUrl1);
 		
