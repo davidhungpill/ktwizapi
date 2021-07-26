@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -24,6 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
 		.authorizeRequests()
 		.antMatchers("/event/**").permitAll()
 		.and()
@@ -41,6 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		String localUrl1 = " http://localhost:8080";
 		String localUrl2 = " http://localhost:8081";
 		String localUrl3 = " http://localhost";
+		
+		log.info("### cors config : {}, {}, {}, {}, {}", webUrl, webDomain, localUrl1, localUrl2, localUrl3);
 		
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowedHeaders(Arrays.asList("*"));
