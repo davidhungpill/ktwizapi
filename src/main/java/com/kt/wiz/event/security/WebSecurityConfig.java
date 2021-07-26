@@ -13,11 +13,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(
 		prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -25,14 +27,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+		.httpBasic().disable()
+		.cors().configurationSource(corsConfigurationSource())
+		.and()
+		.csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and()
 		.authorizeRequests()
 		.antMatchers("/event/**").permitAll()
-		.and()
-		.cors().configurationSource(corsConfigurationSource())
-		.and()
-		.csrf().disable()
 		;
 	}
 	
@@ -42,16 +44,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		String webUrl = "http://ec2-3-36-248-102.ap-northeast-2.compute.amazonaws.com";
 		String webDomain = "http://xservice.co.kr";
 		String localUrl1 = " http://localhost:8080";
-		String localUrl2 = " http://localhost:8081";
-		String localUrl3 = " http://localhost";
 		
-		log.info("### cors config : {}, {}, {}, {}, {}", webUrl, webDomain, localUrl1, localUrl2, localUrl3);
+		log.info("### cors config : {}, {}, {}, {}, {}", webUrl, webDomain, localUrl1);
 		
 		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowedHeaders(Arrays.asList("*"));
-		config.setAllowedOrigins(Arrays.asList(webUrl, webDomain, localUrl1, localUrl2, localUrl3));
-		config.setAllowedMethods(Arrays.asList("GET", "POST","OPTIONS"));;
-		
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("*");
+		config.addAllowedOrigin(webUrl);
+		config.addAllowedOrigin(webDomain);
+		config.addAllowedOrigin(localUrl1);
+		config.setAllowCredentials(true);
+				
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
 		return source;
