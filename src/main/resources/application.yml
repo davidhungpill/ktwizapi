@@ -17,8 +17,8 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: Test8080!
+    username: ENC(ztwh1STPLCTQ4UPOvTaYb+nW3XuWrtvOmTG1uU7jSMwBxiOMBygmcQ==)
+    password: ENC(V9EGqX4WVUW3a+36KgGPWdnkQSBjPmqjvYpMO5su8S8adj1TI6MpBQ==)
     hikari:
       connection-timeout: 30000
       max-lifetime: 1800000
