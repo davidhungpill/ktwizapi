@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kt.wiz.event.bean.Application;
 import com.kt.wiz.event.bean.Event;
@@ -43,13 +44,35 @@ public class EventService {
 		return Optional.ofNullable(eventlist.get(0));
 	}
 
+	@Transactional
+	public Map<String, String> addEvent(Event event) {
+		log.debug("### start [addEvent] in EventService ...");
+		String result = "success";
+		String message = "이벤트 추가에 성공하였습니다.";
+		HashMap<String, String> resultMap = new HashMap<String, String>();
+		
+		Event resultEvent = eventRepository.save(event);
+		
+		if(resultEvent == null) {
+			result = "fail";
+			message = "DB insert 실패했습니다";			
+		}
+		
+		resultMap.put("result", result);
+		resultMap.put("message", "이벤트 번호="+resultEvent.getId()+" "+message);
+		
+		return resultMap;
+	}
+	
+	@Transactional
 	public Map<String,Object> applyToEvent(Application application) {
 		log.debug("### start [getAvailableEvent] in EventService ...");
 		String result = "success";
 		String message = "이벤트 응모에 성공하였습니다.";
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		Optional<Application> appHist = applicationRepository.findByUserId(application.getUserId());
 		Map<String,Long> statisticMap = null;
+		// 이벤트 응모여부 조회
+		Optional<Application> appHist = applicationRepository.findByUserIdAndEvent(application.getUserId(), application.getEvent());
 		
 		// 이미 이벤트에 응모한 경우
 		if(appHist.isPresent()) {
@@ -66,7 +89,9 @@ public class EventService {
 				List<EventAnswerStatistic> statisticList = null;
 				try {
 					statisticList = getEventStatistic(application.getEvent().getId());
-				} catch(Exception e) {}
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 				if(statisticList != null && !statisticList.isEmpty()){
 					statisticMap = new HashMap<String, Long>();
 					for (EventAnswerStatistic object : statisticList) {
@@ -88,22 +113,5 @@ public class EventService {
 		return applicationRepository.findEventServeyCount(eventId);
 	}
 
-	public Map<String, String> addEvent(Event event) {
-		log.debug("### start [addEvent] in EventService ...");
-		String result = "success";
-		String message = "이벤트 추가에 성공하였습니다.";
-		HashMap<String, String> resultMap = new HashMap<String, String>();
-		
-		Event resultEvent = eventRepository.save(event);
-		
-		if(resultEvent == null) {
-			result = "fail";
-			message = "DB insert 실패했습니다";			
-		}
-		
-		resultMap.put("result", result);
-		resultMap.put("message", message);
-		
-		return resultMap;
-	}
+	
 }

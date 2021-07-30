@@ -1,3 +1,4 @@
+SERVER.PORT : 80
 # profile - default
 
 #jasypt encryptor
@@ -14,9 +15,16 @@ management:
         
 spring:
   datasource:
+    type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:postgresql://localhost:5432/postgres
-    username: ENC(0HBCDy2lbWkgTSmuzFaL8vKR/wKgaSPG6Nh9SYRBk3pOhV8j6KewlQ==)
-    password: ENC(qfz0YyXIxkmieUl2Ag7LP4jQ3WNeRZXUKaAc7SYDEpaEcBRaw023rg==)
+    username: postgres
+    password: Test8080!
+    hikari:
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      maximum-pool-size: 20
+      pool-name: SpringBootJPAHikariCP
+      auto-commit: false  
   jpa:
     show-sql: true
     generate-ddl: true
@@ -26,6 +34,7 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+
 server:
   servlet:
     encoding:

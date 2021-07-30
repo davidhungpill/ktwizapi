@@ -41,9 +41,9 @@ public class EventController {
 	
 	@ApiOperation(value="Event ID로 Event 조회하는 기능", notes="event ID 필요")
 	@GetMapping("/id/{id}")
-	public @Valid ResponseEntity<Event> getEventAvailable(@Valid @PathVariable("id") long id) {
+	public @Valid ResponseEntity<Event> getEvent(@Valid @PathVariable("id") long id) {
 		
-		log.debug("### start [getEventAvailable] in EventController ...");
+		log.debug("### start [getEvent] in EventController ...");
 		Optional<Event> event = eventService.getEvent(id);
 
 		// DB에서 조회하여 없는 경우
