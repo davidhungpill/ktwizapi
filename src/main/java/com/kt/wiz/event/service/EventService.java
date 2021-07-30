@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kt.wiz.event.bean.Application;
 import com.kt.wiz.event.bean.Event;
+import com.kt.wiz.event.bean.EventAnswerStatistic;
 import com.kt.wiz.event.repository.ApplicationRepository;
 import com.kt.wiz.event.repository.EventRepository;
 
@@ -42,12 +43,13 @@ public class EventService {
 		return Optional.ofNullable(eventlist.get(0));
 	}
 
-	public Map<String,String> applyToEvent(Application application) {
+	public Map<String,Object> applyToEvent(Application application) {
 		log.debug("### start [getAvailableEvent] in EventService ...");
 		String result = "success";
 		String message = "이벤트 응모에 성공하였습니다.";
-		HashMap<String, String> resultMap = new HashMap<String, String>();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		Optional<Application> appHist = applicationRepository.findByUserId(application.getUserId());
+		Map<String,Long> statisticMap = null;
 		
 		// 이미 이벤트에 응모한 경우
 		if(appHist.isPresent()) {
@@ -60,13 +62,30 @@ public class EventService {
 			if(restApp == null) {
 				result = "fail";
 				message = "DB insert 실패했습니다";			
+			}else {
+				List<EventAnswerStatistic> statisticList = null;
+				try {
+					statisticList = getEventStatistic(application.getEvent().getId());
+				} catch(Exception e) {}
+				if(statisticList != null && !statisticList.isEmpty()){
+					statisticMap = new HashMap<String, Long>();
+					for (EventAnswerStatistic object : statisticList) {
+						statisticMap.put(object.getChoice(),object.getCnt());
+					}
+				}
 			}
 		}
 		
 		resultMap.put("result", result);
 		resultMap.put("message", message);
+		resultMap.put("statistic", statisticMap);
 		
 		return resultMap;
+	}
+	
+	public List<EventAnswerStatistic> getEventStatistic(Long eventId){
+		log.debug("### start [getEventStatistic] in EventService ...");
+		return applicationRepository.findEventServeyCount(eventId);
 	}
 
 	public Map<String, String> addEvent(Event event) {
