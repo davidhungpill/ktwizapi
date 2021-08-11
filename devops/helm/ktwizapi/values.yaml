@@ -194,9 +194,9 @@ ingress:
   serviceName: ktwizapi
   port: 80
   hosts:
-    - host: ktwiz.api.ktds.amazonaws.com
+    - host: ec2-3-36-248-102.ap-northeast-2.compute.amazonaws.com
       paths: 
-        - /
+        - /event
   tls: []
   #  - caCertificate: |-
   #      -----BEGIN CERTIFICATE-----
