@@ -108,7 +108,7 @@ public class EventController {
 	}
 	
 	@ApiOperation(value="현재 활성화된 Event를 조회하는 기능", notes="활성화된 Event가 여러개인 경우 1개만 리턴")
-	@GetMapping("/AIAvailable")
+	@GetMapping("/Available")
 	public @Valid ResponseEntity<EventAnalysis> getEventAvailable() {
 		
 		log.debug("### start [getEventAvailableWithAI] in EventController ...");
