@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kt.wiz.event.bean.AIAnalysis;
 import com.kt.wiz.event.bean.Application;
 import com.kt.wiz.event.bean.Event;
 import com.kt.wiz.event.bean.EventAnswerStatistic;
+import com.kt.wiz.event.repository.AIAnalysisRepository;
 import com.kt.wiz.event.repository.ApplicationRepository;
 import com.kt.wiz.event.repository.EventRepository;
 
@@ -26,6 +28,9 @@ public class EventService {
 
 	@Autowired
 	private ApplicationRepository applicationRepository;
+
+	@Autowired
+	private AIAnalysisRepository aiAnalysisRepository;
 
 	public Optional<Event> getEvent(long id) {
 		log.debug("### start [getEvent] in EventService ...");
@@ -113,5 +118,28 @@ public class EventService {
 		return applicationRepository.findEventServeyCount(eventId);
 	}
 
+	public AIAnalysis getAIAnalysis(Event event, String useYN) {
+		log.debug("### start [getEventStatistic] in EventService ...");
+		return aiAnalysisRepository.findByEventAndUseYN(event, useYN).get(0);
+	}
+
+	public Map<String,String> addAIAnalysis(AIAnalysis aIAnalytics) {
+		log.debug("### start [addAIAnalytics] in EventService ...");
+		String result = "success";
+		String message = "AI분석 내용 추가에 성공하였습니다.";
+		HashMap<String, String> resultMap = new HashMap<String, String>();
+		
+		AIAnalysis resultAnalytics = aiAnalysisRepository.save(aIAnalytics);
+		
+		if(resultAnalytics == null) {
+			result = "fail";
+			message = "DB insert 실패했습니다";			
+		}
+		
+		resultMap.put("result", result);
+		resultMap.put("message", "AI분석 ID="+resultAnalytics.getId()+" "+message);
+		
+		return resultMap;
+	}
 	
 }
