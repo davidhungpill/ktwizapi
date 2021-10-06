@@ -2,7 +2,9 @@ package com.kt.wiz.event.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Builder;
@@ -36,22 +39,22 @@ public class AIAnalysis implements Serializable {
 	
 	private String useYN;
 	
-	private String answers;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "AIANALYSIS_ID")
+	private Set<AIAnswer> aiAnswers;
 	
 	@Column(length = 3000)
 	private String analysis;
 	
 	@Builder
 	public AIAnalysis(
-			long id,
 			Event event,
 			String useYN,
-			String answers,
+			Set<AIAnswer> aiAnswers,
 			String analysis) {
-		this.id = id;
 		this.event = event;
 		this.useYN = useYN;
-		this.answers = answers;
+		this.aiAnswers = aiAnswers;
 		this.analysis = analysis;
 	}
 	

@@ -82,10 +82,10 @@ public class EventController {
 	
 	@ApiOperation(value="Event에 응모하는 기능", notes="Application 내용 입력 필요")
 	@PostMapping("/apply")
-	public @Valid ResponseEntity<Map<String,Object>> applyToEvent(@RequestBody Application application){
+	public @Valid ResponseEntity<Map<String,Object>> applyToEvent(@RequestBody Application[] applications){
 		
 		log.debug("### start [applyToEvent] in EventController ...");
-		return new ResponseEntity<>(eventService.applyToEvent(application), HttpStatus.OK);
+		return new ResponseEntity<>(eventService.applyToEvent(applications), HttpStatus.OK);
 		
 	}
 	

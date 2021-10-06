@@ -2,12 +2,16 @@ package com.kt.wiz.event.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Builder;
@@ -32,37 +36,51 @@ public class Event implements Serializable {
 	
 	private String description;
 	
-	private String choices;
-	
 	private Date eventStartDateTime;
 	
 	private Date eventEndDateTime;
 	
 	private String activateYN;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "EVENT_ID")
+	private Set<Question> questions;
+	
 	@Builder
 	public Event(
-			long id,
 			String name,
 			String description,
-			String choices,
 			Date eventStartDateTime,
 			Date eventEndDateTime,
-			String activateYN) {
-		this.id = id;
+			String activateYN,
+			Set<Question> questions) {
 		this.name = name;
 		this.description = description;
-		this.choices = choices;
 		this.eventStartDateTime = eventStartDateTime;
 		this.eventEndDateTime = eventEndDateTime;
 		this.activateYN = activateYN;
+		this.questions = questions;
+	}
+	
+	public Event(
+			Long id,
+			String name,
+			String description,
+			Date eventStartDateTime,
+			Date eventEndDateTime,
+			String activateYN,
+			Set<Question> questions) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.eventStartDateTime = eventStartDateTime;
+		this.eventEndDateTime = eventEndDateTime;
+		this.activateYN = activateYN;
+		this.questions = questions;
 	}
 	
 	public Event() {
 		
 	}
-	
-	public Event(Long id) {
-		this.id = id;
-	}
+
 }

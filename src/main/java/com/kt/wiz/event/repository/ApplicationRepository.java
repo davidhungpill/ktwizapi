@@ -9,16 +9,17 @@ import org.springframework.data.repository.CrudRepository;
 import com.kt.wiz.event.bean.Application;
 import com.kt.wiz.event.bean.Event;
 import com.kt.wiz.event.bean.EventAnswerStatistic;
+import com.kt.wiz.event.bean.Question;
 
 public interface ApplicationRepository extends CrudRepository<Application, Long> {
 
-	Optional<Application> findByUserIdAndEvent(String userId, Event event);
+	List<Application> findByUserIdAndEvent(String userId, Event event);
 	
 	@Query(nativeQuery = true, value =
-			"select a.choice as choice, count(*) as cnt " + 
+			"select a.question_id as question, a.choice as choice, count(*) as cnt " + 
 			"from application a " +
 			"where a.event_id = ?1 " +
-			"group by a.choice")
+			"group by a.question_id, a.choice")
 	List<EventAnswerStatistic> findEventServeyCount(Long eventId);
 
 }

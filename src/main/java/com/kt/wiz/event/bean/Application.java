@@ -34,18 +34,23 @@ public class Application implements Serializable {
 	@JoinColumn(name="EVENT_ID")
 	private Event event;
 	
+	@ManyToOne
+	@JoinColumn(name="QUESTION_ID")
+	private Question question;
+	
+	
 	private String userId;
 	
 	private String choice;
 	
 	@Builder
 	public Application(
-			long id,
 			Event event,
+			Question question,
 			String userId,
 			String choice) {
-		this.id = id;
 		this.event = event;
+		this.question = question;
 		this.userId = userId;
 		this.choice = choice;
 	}
