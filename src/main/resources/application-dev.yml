@@ -15,7 +15,7 @@ management:
         
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRES_ENV_IP}:${POSTGRES_ENV_PORT}/${POSTGRES_ENV_DB}
+    url: jdbc:postgresql://${POSTGRES_ENV_IP}:${POSTGRES_ENV_PORT}/${POSTGRES_ENV_DB}?serverTimezone=Asia/Seoul
     username: ENC(0HBCDy2lbWkgTSmuzFaL8vKR/wKgaSPG6Nh9SYRBk3pOhV8j6KewlQ==)
     password: ENC(YH/kQ3F8SRnvAWgZDK/MZTJmWdIA/iE9rI81qcRrs8JhBaNA52NAWA==)
   jpa:
