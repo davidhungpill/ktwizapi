@@ -16,8 +16,10 @@ import javax.persistence.Table;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @Table
 public class Event implements Serializable {

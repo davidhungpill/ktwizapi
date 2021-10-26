@@ -117,7 +117,10 @@ public class EventController {
 		AIAnalysis aiAnalysis = null;
 		// DB에서 조회하여 없는 경우
 		if ( !optEvent.isPresent() ) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			Event emptyEvent = new Event();
+			emptyEvent.setName("현재 진행중인 이벤트가 없습니다.");
+			EventAnalysis emptyEventAnalysis = new EventAnalysis(emptyEvent, new AIAnalysis());
+			return new ResponseEntity<>(emptyEventAnalysis,HttpStatus.OK);
 		}else {
 			Event event = optEvent.get();
 			aiAnalysis = eventService.getAIAnalysis(event, "Y");

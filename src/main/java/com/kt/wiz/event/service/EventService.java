@@ -46,10 +46,10 @@ public class EventService {
 		log.debug("### start [getAvailableEvent] in EventService ...");
 		
 		List<Event> eventlist = eventRepository.findByActivateYNEquals("Y");
-		if(!eventlist.isEmpty() && eventlist.size() > 1) {
+		if(!eventlist.isEmpty() && eventlist.size() > 0) {
 			return Optional.ofNullable(eventlist.get(0));
 		}
-		return Optional.ofNullable(eventlist.get(0));
+		return Optional.ofNullable(null);
 	}
 
 	@Transactional
